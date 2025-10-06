@@ -1,0 +1,59 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.5.6'
+	id 'io.spring.dependency-management' version '1.1.7'
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+description = 'Demo project for Spring Boot'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(17)
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	
+    // --- Core Web & Validation ---
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+    // --- Database & ORM ---
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.postgresql:postgresql'
+	    implementation 'org.flywaydb:flyway-core:11.10.0'
+	    implementation 'org.flywaydb:flyway-database-postgresql:11.10.0'
+		// Use embedded H2 at runtime for local/dev runs
+		runtimeOnly 'com.h2database:h2'
+
+    // --- Security & JWT ---
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
+    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
+    runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5' // for JSON serialization
+
+    // --- Lombok (reduce boilerplate) ---
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
+    // --- API Documentation (Swagger / OpenAPI) ---
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0'
+
+    // --- Testing ---
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+		// Add embedded DB for tests so Spring Boot can auto-configure a DataSource without external DB
+		testImplementation 'com.h2database:h2'
+
+
+
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
