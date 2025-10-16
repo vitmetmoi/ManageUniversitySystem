@@ -1,35 +1,32 @@
-package com.example.myapp.knowledgeblocks;
+package com.example.myapp.frame;
 
+import com.example.myapp.courses.Course;
+import com.example.myapp.knowledgeblocks.KnowledgeBlock;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "knowledge_blocks")
+@Table(name = "knowledgeblock_course")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class KnowledgeBlock {
+public class KnowledgeBlockCourse {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true, nullable = false, length = 50)
-    private String code;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "knowledgeblock_id", nullable = false)
+    private KnowledgeBlock knowledgeBlock;
 
-    @Column(nullable = false)
-    private String name;
-
-    @Column(columnDefinition = "TEXT")
-    private String description;
-
-
-    @Column(nullable = false)
-    private Integer sequenceOrder;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "course_id", nullable = false)
+    private Course course;
 
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
@@ -38,7 +35,6 @@ public class KnowledgeBlock {
     protected void onCreate() {
         createdAt = LocalDateTime.now();
         updatedAt = createdAt;
-        if (sequenceOrder == null) sequenceOrder = 0;
     }
 
     @PreUpdate
@@ -46,5 +42,3 @@ public class KnowledgeBlock {
         updatedAt = LocalDateTime.now();
     }
 }
-
-

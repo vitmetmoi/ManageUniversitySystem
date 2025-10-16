@@ -1,0 +1,6 @@
+ALTER TABLE majors
+    ADD COLUMN
+IF NOT EXISTS price_per_credit DECIMAL
+(10,2) DEFAULT 0 NOT NULL;
+
+

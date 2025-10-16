@@ -1,4 +1,4 @@
-package com.example.myapp.courses.dto;
+package com.example.myapp.employee.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,13 +11,13 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class CourseResponse {
+public class EmployeeResponse {
     private Long id;
-    private String code;
-    private String name;
-    private String description;
-    private Double credits;
-    private Boolean elective;
+    private String email;
+    private String userName;
+    private String firstName;
+    private String lastName;
+    private String status;
     private Long facultyId;
     private String facultyName;
     private Long majorId;

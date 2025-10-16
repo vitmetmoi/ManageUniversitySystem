@@ -13,9 +13,6 @@ public class KnowledgeBlockRequest {
     @NotBlank
     private String name;
     private String description;
-    @NotNull
-    private Long curriculumId;
-    private Long parentBlockId;
     private Integer sequenceOrder;
 }
 

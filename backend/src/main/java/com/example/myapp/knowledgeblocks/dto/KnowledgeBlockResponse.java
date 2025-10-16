@@ -12,8 +12,6 @@ public class KnowledgeBlockResponse {
     private String code;
     private String name;
     private String description;
-    private Long curriculumId;
-    private Long parentBlockId;
     private Integer childrenCount;
 }
 

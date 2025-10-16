@@ -11,6 +11,7 @@ public class MajorMapper {
                 .code(r.getCode())
                 .name(r.getName())
                 .description(r.getDescription())
+                .pricePerCredit(r.getPricePerCredit())
                 .build();
     }
 
@@ -20,6 +21,7 @@ public class MajorMapper {
                 .code(m.getCode())
                 .name(m.getName())
                 .description(m.getDescription())
+                .pricePerCredit(m.getPricePerCredit())
                 .build();
         if (m.getFaculty() != null) {
             resp.setFacultyId(m.getFaculty().getId());

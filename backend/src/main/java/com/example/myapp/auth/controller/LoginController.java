@@ -16,11 +16,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/login")
+@RequestMapping("/api/auth")
 public class LoginController {
     public final LoginService loginService;
 
-    @PostMapping()
+    @PostMapping("/login-basic")
     public LoginResponse login(@Valid @RequestBody LoginRequest loginRequest) {
         return loginService.loginService(loginRequest);
     }

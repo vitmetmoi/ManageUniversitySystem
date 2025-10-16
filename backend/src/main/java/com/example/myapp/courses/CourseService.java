@@ -54,11 +54,7 @@ public class CourseService {
                     .orElseThrow(() -> new ResourceNotFoundException("Faculty not found with id " + req.getFacultyId()));
             c.setFaculty(f);
         }
-        if (req.getMajorId() != null) {
-            Major m = majorRepository.findById(req.getMajorId())
-                    .orElseThrow(() -> new ResourceNotFoundException("Major not found with id " + req.getMajorId()));
-            c.setMajor(m);
-        }
+       
         return CourseMapper.toResponse(courseRepository.save(c));
     }
 
@@ -78,13 +74,7 @@ public class CourseService {
         } else {
             c.setFaculty(null);
         }
-        if (req.getMajorId() != null) {
-            Major m = majorRepository.findById(req.getMajorId())
-                    .orElseThrow(() -> new ResourceNotFoundException("Major not found with id " + req.getMajorId()));
-            c.setMajor(m);
-        } else {
-            c.setMajor(null);
-        }
+       
         return CourseMapper.toResponse(courseRepository.save(c));
     }
 

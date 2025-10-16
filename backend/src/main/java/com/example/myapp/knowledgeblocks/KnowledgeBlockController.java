@@ -15,9 +15,9 @@ public class KnowledgeBlockController {
 
     private final KnowledgeBlockService knowledgeBlockService;
 
-    @GetMapping("/by-curriculum/{curriculumId}")
-    public List<KnowledgeBlockResponse> getByCurriculum(@PathVariable Long curriculumId) {
-        return knowledgeBlockService.getByCurriculum(curriculumId);
+    @GetMapping
+    public List<KnowledgeBlockResponse> getAll() {
+        return knowledgeBlockService.getAll();
     }
 
     @PostMapping

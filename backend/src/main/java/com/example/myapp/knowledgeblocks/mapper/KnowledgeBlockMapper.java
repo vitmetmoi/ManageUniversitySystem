@@ -27,8 +27,6 @@ public class KnowledgeBlockMapper {
                 .code(kb.getCode())
                 .name(kb.getName())
                 .description(kb.getDescription())
-                .curriculumId(kb.getCurriculum() != null ? kb.getCurriculum().getId() : null)
-                .parentBlockId(kb.getParentBlock() != null ? kb.getParentBlock().getId() : null)
                 .childrenCount(childrenCount)
                 .build();
     }
