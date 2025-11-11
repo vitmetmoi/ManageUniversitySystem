@@ -19,8 +19,6 @@ public class CourseRequest {
     private Double credits;
     private Integer theoryHours;
     private Integer practiceHours;
-    @NotNull
-    private Boolean elective;
     private Long facultyId;
     private Long majorId;
 }

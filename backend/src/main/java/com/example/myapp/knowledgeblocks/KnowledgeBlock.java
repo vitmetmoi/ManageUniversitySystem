@@ -31,6 +31,9 @@ public class KnowledgeBlock {
     @Column(nullable = false)
     private Integer sequenceOrder;
 
+    @Column(nullable = false)
+    private Boolean elective;
+
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
@@ -39,6 +42,7 @@ public class KnowledgeBlock {
         createdAt = LocalDateTime.now();
         updatedAt = createdAt;
         if (sequenceOrder == null) sequenceOrder = 0;
+        if (elective == null) elective = false;
     }
 
     @PreUpdate

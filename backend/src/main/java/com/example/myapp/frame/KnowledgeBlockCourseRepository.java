@@ -46,3 +46,4 @@ public interface KnowledgeBlockCourseRepository extends JpaRepository<KnowledgeB
            "(SELECT kbc.knowledgeBlock FROM KnowledgeBlockCourse kbc WHERE kbc.course.id = :courseId)")
     List<KnowledgeBlock> findUnassignedKnowledgeBlocks(@Param("courseId") Long courseId);
 }
+

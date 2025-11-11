@@ -11,6 +11,7 @@ public class KnowledgeBlockMapper {
                 .name(r.getName())
                 .description(r.getDescription())
                 .sequenceOrder(r.getSequenceOrder())
+                .elective(r.getElective())
                 .build();
     }
 
@@ -19,6 +20,7 @@ public class KnowledgeBlockMapper {
         kb.setName(r.getName());
         kb.setDescription(r.getDescription());
         kb.setSequenceOrder(r.getSequenceOrder());
+        kb.setElective(r.getElective());
     }
 
     public static KnowledgeBlockResponse toResponse(KnowledgeBlock kb, int childrenCount) {
@@ -27,6 +29,7 @@ public class KnowledgeBlockMapper {
                 .code(kb.getCode())
                 .name(kb.getName())
                 .description(kb.getDescription())
+                .elective(kb.getElective())
                 .childrenCount(childrenCount)
                 .build();
     }

@@ -16,7 +16,6 @@ public class CurriculumMapper {
                 .code(r.getCode())
                 .name(r.getName())
                 .effectiveYear(r.getEffectiveYear())
-                .totalCredits(r.getTotalCredits())
                 .description(r.getDescription())
                 .build();
     }
@@ -25,7 +24,6 @@ public class CurriculumMapper {
         c.setCode(r.getCode());
         c.setName(r.getName());
         c.setEffectiveYear(r.getEffectiveYear());
-        c.setTotalCredits(r.getTotalCredits());
         c.setDescription(r.getDescription());
     }
 
@@ -35,7 +33,6 @@ public class CurriculumMapper {
                 .code(c.getCode())
                 .name(c.getName())
                 .effectiveYear(c.getEffectiveYear())
-                .totalCredits(c.getTotalCredits())
                 .description(c.getDescription());
         if (c.getMajor() != null) {
             b.majorId(c.getMajor().getId());

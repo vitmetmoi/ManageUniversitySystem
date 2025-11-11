@@ -42,3 +42,4 @@ public class KnowledgeBlockMajor {
         updatedAt = LocalDateTime.now();
     }
 }
+

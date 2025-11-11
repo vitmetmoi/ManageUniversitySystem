@@ -189,7 +189,6 @@ public class FrameService {
                                                             .code(course.getCode())
                                                             .name(course.getName())
                                                             .credits(course.getCredits())
-                                                            .elective(course.getElective())
                                                             .build();
                                                 })
                                                 .collect(Collectors.toList());
@@ -237,7 +236,6 @@ public class FrameService {
                                                 .code(course.getCode())
                                                 .name(course.getName())
                                                 .credits(course.getCredits())
-                                                .elective(course.getElective())
                                                 .build();
                                     })
                                     .collect(Collectors.toList());
@@ -260,3 +258,4 @@ public class FrameService {
                 .build();
     }
 }
+

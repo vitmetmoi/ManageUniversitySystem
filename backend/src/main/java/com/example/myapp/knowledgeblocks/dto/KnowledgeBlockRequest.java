@@ -14,6 +14,8 @@ public class KnowledgeBlockRequest {
     private String name;
     private String description;
     private Integer sequenceOrder;
+    @NotNull
+    private Boolean elective;
 }
 
 

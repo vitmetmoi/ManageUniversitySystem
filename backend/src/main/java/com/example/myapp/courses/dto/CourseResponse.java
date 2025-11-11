@@ -17,7 +17,6 @@ public class CourseResponse {
     private String name;
     private String description;
     private Double credits;
-    private Boolean elective;
     private Long facultyId;
     private String facultyName;
     private Long majorId;

@@ -17,8 +17,6 @@ public class CurriculumRequest {
     private Long majorId;
     @NotNull
     private Integer effectiveYear;
-    @Min(0)
-    private Double totalCredits;
     private String description;
 }
 

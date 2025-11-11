@@ -38,7 +38,7 @@ public class FrameStructureResponse {
             private String code;
             private String name;
             private Double credits;
-            private Boolean elective;
         }
     }
 }
+

@@ -46,3 +46,4 @@ public interface KnowledgeBlockMajorRepository extends JpaRepository<KnowledgeBl
            "(SELECT kbm.knowledgeBlock FROM KnowledgeBlockMajor kbm WHERE kbm.major.id = :majorId)")
     List<KnowledgeBlock> findUnassignedKnowledgeBlocks(@Param("majorId") Long majorId);
 }
+

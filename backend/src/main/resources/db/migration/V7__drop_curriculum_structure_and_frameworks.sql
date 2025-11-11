@@ -17,3 +17,4 @@ DROP CONSTRAINT IF EXISTS fk_ci_prerequisite;
 
 ALTER TABLE curriculum_items 
 DROP COLUMN IF EXISTS prerequisite_course_id;
+

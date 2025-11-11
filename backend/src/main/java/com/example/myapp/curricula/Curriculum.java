@@ -32,8 +32,6 @@ public class Curriculum {
     @Column(nullable = false)
     private Integer effectiveYear;
 
-    private Double totalCredits;
-
     @Column(columnDefinition = "TEXT")
     private String description;
 
@@ -46,7 +44,6 @@ public class Curriculum {
     protected void onCreate() {
         createdAt = LocalDateTime.now();
         updatedAt = createdAt;
-        if (totalCredits == null) totalCredits = 0.0;
     }
 
     @PreUpdate

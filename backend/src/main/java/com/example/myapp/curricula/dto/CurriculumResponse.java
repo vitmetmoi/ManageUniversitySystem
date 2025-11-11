@@ -16,7 +16,6 @@ public class CurriculumResponse {
     private Long majorId;
     private String majorName;
     private Integer effectiveYear;
-    private Double totalCredits;
     private String description;
     private List<CurriculumItemResponse> items;
 }

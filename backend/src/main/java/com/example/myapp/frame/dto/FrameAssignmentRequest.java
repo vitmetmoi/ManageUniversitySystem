@@ -18,3 +18,4 @@ public class FrameAssignmentRequest {
     @NotNull(message = "Target ID is required")
     private Long targetId; // Can be course ID or major ID
 }
+

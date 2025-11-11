@@ -103,8 +103,7 @@ public class CurriculumService {
         }
         CurriculumItem saved = itemRepository.save(item);
 
-        // Optionally recompute total credits
-        recomputeTotalCredits(curriculumId);
+        // total credits moved to Major; curriculum no longer stores total credits
         return CurriculumMapper.toItemResponse(saved);
     }
 
@@ -132,7 +131,7 @@ public class CurriculumService {
             item.setKnowledgeBlock(null);
         }
         CurriculumItem saved = itemRepository.save(item);
-        recomputeTotalCredits(curriculumId);
+        // total credits moved to Major; curriculum no longer stores total credits
         return CurriculumMapper.toItemResponse(saved);
     }
 
@@ -143,7 +142,7 @@ public class CurriculumService {
             throw new DataIntegrityViolationException("Item does not belong to curriculum");
         }
         itemRepository.deleteById(itemId);
-        recomputeTotalCredits(curriculumId);
+        // total credits moved to Major; curriculum no longer stores total credits
     }
 
     public CurriculumResponse getFullStructure(Long curriculumId) {
@@ -162,14 +161,7 @@ public class CurriculumService {
         return resp;
     }
 
-    private void recomputeTotalCredits(Long curriculumId) {
-        Curriculum curriculum = curriculumRepository.findById(curriculumId)
-                .orElseThrow(() -> new ResourceNotFoundException("Curriculum not found with id " + curriculumId));
-        double sum = itemRepository.findByCurriculum_IdOrderBySemesterAscSequenceOrderAsc(curriculumId)
-                .stream().mapToDouble(CurriculumItem::getCredits).sum();
-        curriculum.setTotalCredits(sum);
-        curriculumRepository.save(curriculum);
-    }
+    // removed recomputeTotalCredits: curriculum no longer stores total credits
 }
 
 

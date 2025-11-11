@@ -36,6 +36,9 @@ public class Major {
     @Column(precision = 10, scale = 2)
     private BigDecimal pricePerCredit;
 
+    @Column(precision = 6, scale = 2)
+    private BigDecimal totalCredits;
+
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 

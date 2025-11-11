@@ -36,8 +36,6 @@ public class Course {
 
     private Integer practiceHours;
 
-    @Column(nullable = false)
-    private Boolean elective;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "faculty_id")
@@ -56,7 +54,6 @@ public class Course {
     protected void onCreate() {
         createdAt = LocalDateTime.now();
         updatedAt = createdAt;
-        if (elective == null) elective = false;
         if (credits == null) credits = 0.0;
     }
 

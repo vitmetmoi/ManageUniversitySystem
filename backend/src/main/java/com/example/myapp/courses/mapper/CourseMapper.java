@@ -14,7 +14,6 @@ public class CourseMapper {
                 .credits(r.getCredits())
                 .theoryHours(r.getTheoryHours())
                 .practiceHours(r.getPracticeHours())
-                .elective(r.getElective())
                 .build();
     }
 
@@ -25,7 +24,6 @@ public class CourseMapper {
         c.setCredits(r.getCredits());
         c.setTheoryHours(r.getTheoryHours());
         c.setPracticeHours(r.getPracticeHours());
-        c.setElective(r.getElective());
     }
 
     public static CourseResponse toResponse(Course c) {
@@ -35,7 +33,7 @@ public class CourseMapper {
                 .name(c.getName())
                 .description(c.getDescription())
                 .credits(c.getCredits())
-                .elective(c.getElective());
+                ;
         if (c.getFaculty() != null) {
             b.facultyId(c.getFaculty().getId());
             b.facultyName(c.getFaculty().getName());

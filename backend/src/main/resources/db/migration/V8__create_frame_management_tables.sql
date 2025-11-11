@@ -36,3 +36,8 @@ ALTER TABLE knowledgeblock_major ADD CONSTRAINT fk_knowledgeblock_major_knowledg
     FOREIGN KEY (knowledgeblock_id) REFERENCES knowledge_blocks(id) ON DELETE CASCADE;
 ALTER TABLE knowledgeblock_major ADD CONSTRAINT fk_knowledgeblock_major_major 
     FOREIGN KEY (major_id) REFERENCES majors(id) ON DELETE CASCADE;
+
+
+
+
+
