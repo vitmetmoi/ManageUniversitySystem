@@ -1,7 +1,5 @@
 package com.example.myapp.courses;
 
-import com.example.myapp.faculty.Faculty;
-import com.example.myapp.major.Major;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -29,21 +27,26 @@ public class Course {
     @Column(columnDefinition = "TEXT")
     private String description;
 
-    @Column(nullable = false)
+    @Column(name = "credits")
     private Double credits;
 
-    private Integer theoryHours;
+    @Column(name = "credit_theory")
+    private Double creditTheory;
 
-    private Integer practiceHours;
-
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "faculty_id")
-    private Faculty faculty;
+    @Column(name = "pratice_theory")
+    private Double praticeTheory;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "major_id")
-    private Major major;
+    @JoinColumn(name = "course_elective_id")
+    private Course courseElective;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "course_parallel_id")
+    private Course courseParallel;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "course_previous_id")
+    private Course coursePrevious;
 
     private String status;
 
@@ -54,7 +57,10 @@ public class Course {
     protected void onCreate() {
         createdAt = LocalDateTime.now();
         updatedAt = createdAt;
-        if (credits == null) credits = 0.0;
+        if (creditTheory == null)
+            creditTheory = 0.0;
+        if (praticeTheory == null)
+            praticeTheory = 0.0;
     }
 
     @PreUpdate
@@ -62,5 +68,3 @@ public class Course {
         updatedAt = LocalDateTime.now();
     }
 }
-
-

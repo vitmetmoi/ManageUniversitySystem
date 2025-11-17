@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/courses")
@@ -17,11 +18,7 @@ public class CourseController {
     private final CourseService courseService;
 
     @GetMapping
-    public Page<CourseResponse> getAll(Pageable pageable,
-                                       @RequestParam(required = false) Long majorId,
-                                       @RequestParam(required = false) Long facultyId) {
-        if (majorId != null) return courseService.findByMajor(majorId, pageable);
-        if (facultyId != null) return courseService.findByFaculty(facultyId, pageable);
+    public Page<CourseResponse> getAll(Pageable pageable) {
         return courseService.getAll(pageable);
     }
 
@@ -44,6 +41,11 @@ public class CourseController {
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id) {
         courseService.delete(id);
+    }
+
+    @GetMapping("/by-knowledge-block/{knowledgeBlockId}")
+    public List<CourseResponse> getByKnowledgeBlock(@PathVariable Long knowledgeBlockId) {
+        return courseService.getByKnowledgeBlock(knowledgeBlockId);
     }
 }
 

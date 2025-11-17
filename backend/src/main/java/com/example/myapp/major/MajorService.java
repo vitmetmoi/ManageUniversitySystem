@@ -44,8 +44,6 @@ public class MajorService {
         m.setCode(req.getCode());
         m.setName(req.getName());
         m.setDescription(req.getDescription());
-        m.setPricePerCredit(req.getPricePerCredit());
-        m.setTotalCredits(req.getTotalCredits());
 
         if (req.getFacultyId() != null && !req.getFacultyId().equals(m.getFaculty().getId())) {
             Faculty faculty = facultyRepository.findById(req.getFacultyId())

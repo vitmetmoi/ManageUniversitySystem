@@ -27,6 +27,7 @@ public class FrameAssignmentResponse {
         private Long id;
         private String code;
         private String name;
+        private Double credits;
         private String description;
     }
 
@@ -37,8 +38,8 @@ public class FrameAssignmentResponse {
     public static class UnassignedItem {
         private Long id;
         private String code;
+        private Double credits;
         private String name;
         private String description;
     }
 }
-

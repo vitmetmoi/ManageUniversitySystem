@@ -18,8 +18,9 @@ public class CurriculumController {
     private final CurriculumService curriculumService;
 
     @GetMapping
-    public List<CurriculumResponse> getByMajor(@RequestParam(required = false) Long majorId) {
-        if (majorId == null) return List.of();
+    public List<CurriculumResponse> getAll(@RequestParam(required = false) Long majorId) {
+        if (majorId == null)
+            return List.of();
         return curriculumService.getByMajor(majorId);
     }
 
@@ -49,7 +50,8 @@ public class CurriculumController {
     }
 
     @PutMapping("/{id}/items/{itemId}")
-    public CurriculumItemResponse updateItem(@PathVariable Long id, @PathVariable Long itemId, @Valid @RequestBody CurriculumItemRequest request) {
+    public CurriculumItemResponse updateItem(@PathVariable Long id, @PathVariable Long itemId,
+            @Valid @RequestBody CurriculumItemRequest request) {
         return curriculumService.updateItem(id, itemId, request);
     }
 
@@ -58,5 +60,3 @@ public class CurriculumController {
         curriculumService.deleteItem(id, itemId);
     }
 }
-
-

@@ -12,8 +12,6 @@ public class MajorRequest {
     private String name;
     private String description;
     private Long facultyId; // specify parent faculty when creating/updating
-    private java.math.BigDecimal pricePerCredit;
-    private java.math.BigDecimal totalCredits;
 }
 
 

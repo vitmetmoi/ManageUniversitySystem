@@ -5,7 +5,6 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
-import java.math.BigDecimal;
 
 @Entity
 @Table(name = "majors")
@@ -33,11 +32,6 @@ public class Major {
     @JoinColumn(name = "faculty_id", nullable = false)
     private Faculty faculty;
 
-    @Column(precision = 10, scale = 2)
-    private BigDecimal pricePerCredit;
-
-    @Column(precision = 6, scale = 2)
-    private BigDecimal totalCredits;
 
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

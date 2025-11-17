@@ -17,10 +17,9 @@ public class CourseResponse {
     private String name;
     private String description;
     private Double credits;
-    private Long facultyId;
-    private String facultyName;
-    private Long majorId;
-    private String majorName;
+    private Double creditTheory;
+    private Double praticeTheory;
+    private Long courseElectiveId;
+    private Long courseParallelId;
+    private Long coursePreviousId;
 }
-
-

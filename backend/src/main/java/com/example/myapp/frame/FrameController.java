@@ -1,178 +1,75 @@
 package com.example.myapp.frame;
 
-import java.util.List;
-
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.example.myapp.frame.dto.FrameAssignmentRequest;
 import com.example.myapp.frame.dto.FrameAssignmentResponse;
-import com.example.myapp.frame.dto.FrameStructureResponse;
-
+import com.example.myapp.frame.dto.FrameCreateRequest;
+import com.example.myapp.frame.dto.FrameResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
-@RequestMapping("/api/frame")
+@RequestMapping("/api/frames")
 @RequiredArgsConstructor
-@Slf4j
 @CrossOrigin(origins = "*")
 public class FrameController {
 
     private final FrameService frameService;
 
-    // Knowledge Block - Course Endpoints
+    @GetMapping
+    public ResponseEntity<List<FrameResponse>> getAll() {
+        return ResponseEntity.ok(frameService.getAll());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<FrameResponse> getById(@PathVariable Long id) {
+        return ResponseEntity.ok(frameService.getById(id));
+    }
+
+    @PostMapping
+    public ResponseEntity<FrameResponse> create(@Valid @RequestBody FrameCreateRequest req) {
+        return ResponseEntity.ok(frameService.create(req));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<FrameResponse> update(@PathVariable Long id, @Valid @RequestBody FrameCreateRequest req) {
+        return ResponseEntity.ok(frameService.update(id, req));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        frameService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/{id}/copy")
+    public ResponseEntity<FrameResponse> copy(@PathVariable Long id) {
+        return ResponseEntity.ok(frameService.copy(id));
+    }
 
     @GetMapping("/course-assignments/{knowledgeBlockId}")
-    public ResponseEntity<FrameAssignmentResponse> getCourseAssignments(
-            @PathVariable Long knowledgeBlockId) {
-        try {
-            FrameAssignmentResponse response = frameService.getCourseAssignments(knowledgeBlockId);
-            return ResponseEntity.ok(response);
-        } catch (Exception e) {
-            log.error("Error getting course assignments for knowledge block {}", knowledgeBlockId, e);
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
+    public ResponseEntity<FrameAssignmentResponse> getCourseAssignments(@PathVariable Long knowledgeBlockId) {
+        return ResponseEntity.ok(frameService.getCourseAssignments(knowledgeBlockId));
     }
 
     @PostMapping("/assign-course")
-    public ResponseEntity<String> assignCourseToKnowledgeBlock(
-            @Valid @RequestBody FrameAssignmentRequest request) {
-        try {
-            frameService.assignCourseToKnowledgeBlock(request);
-            return ResponseEntity.ok("Course assigned successfully");
-        } catch (Exception e) {
-            log.error("Error assigning course to knowledge block", e);
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(e.getMessage());
-        }
-    }
-
-    @PutMapping("/assign-course")
-    public ResponseEntity<String> updateCourseAssignment(
-            @Valid @RequestBody FrameAssignmentRequest request) {
-        try {
-            frameService.assignCourseToKnowledgeBlock(request);
-            return ResponseEntity.ok("Course assignment updated successfully");
-        } catch (Exception e) {
-            log.error("Error updating course assignment", e);
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(e.getMessage());
-        }
+    public ResponseEntity<Void> assignCourse(@Valid @RequestBody FrameAssignmentRequest request) {
+        frameService.assignCourseToKnowledgeBlock(request);
+        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/unassign-course/{relationshipId}")
-    public ResponseEntity<String> unassignCourseFromKnowledgeBlock(
-            @PathVariable Long relationshipId) {
-        try {
-            frameService.unassignCourseFromKnowledgeBlock(relationshipId);
-            return ResponseEntity.ok("Course unassigned successfully");
-        } catch (Exception e) {
-            log.error("Error unassigning course from knowledge block", e);
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body(e.getMessage());
-        }
+    public ResponseEntity<Void> unassignCourse(@PathVariable Long relationshipId) {
+        frameService.unassignCourseFromKnowledgeBlock(relationshipId);
+        return ResponseEntity.ok().build();
     }
 
-    // Knowledge Block - Major Endpoints
-
-    @GetMapping("/major-assignments/{knowledgeBlockId}")
-    public ResponseEntity<FrameAssignmentResponse> getMajorAssignments(
-            @PathVariable Long knowledgeBlockId) {
-        try {
-            FrameAssignmentResponse response = frameService.getMajorAssignments(knowledgeBlockId);
-            return ResponseEntity.ok(response);
-        } catch (Exception e) {
-            log.error("Error getting major assignments for knowledge block {}", knowledgeBlockId, e);
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
-    }
-
-    @PostMapping("/assign-major")
-    public ResponseEntity<String> assignMajorToKnowledgeBlock(
-            @Valid @RequestBody FrameAssignmentRequest request) {
-        try {
-            frameService.assignMajorToKnowledgeBlock(request);
-            return ResponseEntity.ok("Major assigned successfully");
-        } catch (Exception e) {
-            log.error("Error assigning major to knowledge block", e);
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(e.getMessage());
-        }
-    }
-
-    @PutMapping("/assign-major")
-    public ResponseEntity<String> updateMajorAssignment(
-            @Valid @RequestBody FrameAssignmentRequest request) {
-        try {
-            frameService.assignMajorToKnowledgeBlock(request);
-            return ResponseEntity.ok("Major assignment updated successfully");
-        } catch (Exception e) {
-            log.error("Error updating major assignment", e);
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(e.getMessage());
-        }
-    }
-
-    @DeleteMapping("/unassign-major/{relationshipId}")
-    public ResponseEntity<String> unassignMajorFromKnowledgeBlock(
-            @PathVariable Long relationshipId) {
-        try {
-            frameService.unassignMajorFromKnowledgeBlock(relationshipId);
-            return ResponseEntity.ok("Major unassigned successfully");
-        } catch (Exception e) {
-            log.error("Error unassigning major from knowledge block", e);
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body(e.getMessage());
-        }
-    }
-
-    // Frame Structure Endpoints
-
-    @GetMapping("/structure")
-    public ResponseEntity<List<FrameStructureResponse>> getFrameStructure() {
-        try {
-            List<FrameStructureResponse> response = frameService.getFrameStructure();
-            return ResponseEntity.ok(response);
-        } catch (Exception e) {
-            log.error("Error getting frame structure", e);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
-    }
-
-    @GetMapping("/structure/major/{majorId}")
-    public ResponseEntity<FrameStructureResponse> getFrameStructureByMajor(
-            @PathVariable Long majorId) {
-        try {
-            FrameStructureResponse response = frameService.getFrameStructureByMajor(majorId);
-            return ResponseEntity.ok(response);
-        } catch (Exception e) {
-            log.error("Error getting frame structure for major {}", majorId, e);
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
-    }
-
-    // Utility Endpoints
-
-    @GetMapping("/knowledge-blocks")
-    public ResponseEntity<List<Object>> getAllKnowledgeBlocks() {
-        try {
-            // This endpoint can be used to get all knowledge blocks for selection
-            // Implementation would depend on existing knowledge block service
-            return ResponseEntity.ok(List.of());
-        } catch (Exception e) {
-            log.error("Error getting knowledge blocks", e);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
+    @DeleteMapping("/unassign-course")
+    public ResponseEntity<Void> unassignCourseByPair(@RequestParam Long knowledgeBlockId, @RequestParam Long courseId) {
+        frameService.unassignCourseFromKnowledgeBlock(knowledgeBlockId, courseId);
+        return ResponseEntity.ok().build();
     }
 }

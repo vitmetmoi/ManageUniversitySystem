@@ -1,4 +1,8 @@
-2025-10-16T15:32:39.138+07:00 ERROR 9812 --- [manageUniversitySystem] [main] o.s.b.d.LoggingFailureAnalysisReporter   : 
+2025-11-18T00:23:45.117+07:00 ERROR 21340 --- [manageUniversitySystem] [http-nio-8080-exec-9] o.h.engine.jdbc.spi.SqlExceptionHelper   : ERROR: numeric field overflow
+  Detail: A field with precision 6, scale 2 must round to an absolute value less than 10^4.
+2025-11-18T00:24:03.954+07:00 ERROR 21340 --- [manageUniversitySystem] [http-nio-8080-exec-10] o.h.engine.jdbc.spi.SqlExceptionHelper   : ERROR: numeric field overflow
+  Detail: A field with precision 6, scale 2 must round to an absolute value less than 10^4.
+2025-11-18T04:10:59.633+07:00 ERROR 15516 --- [manageUniversitySystem] [main] o.s.b.d.LoggingFailureAnalysisReporter   : 
 
 ***************************
 APPLICATION FAILED TO START
@@ -6,25 +10,9 @@ APPLICATION FAILED TO START
 
 Description:
 
-Parameter 4 of constructor in com.example.myapp.curricula.service.CurriculumCloneService required a bean of type 'com.example.myapp.curricula.mapper.CurriculumMapper' that could not be found.
-
-
-Action:
-
-Consider defining a bean of type 'com.example.myapp.curricula.mapper.CurriculumMapper' in your configuration.
-
-2025-10-16T15:35:01.518+07:00 ERROR 4720 --- [manageUniversitySystem] [main] o.s.b.d.LoggingFailureAnalysisReporter   : 
-
-***************************
-APPLICATION FAILED TO START
-***************************
-
-Description:
-
-Parameter 4 of constructor in com.example.myapp.curricula.service.CurriculumCloneService required a bean of type 'com.example.myapp.curricula.mapper.CurriculumMapper' that could not be found.
-
+Web server failed to start. Port 8080 was already in use.
 
 Action:
 
-Consider defining a bean of type 'com.example.myapp.curricula.mapper.CurriculumMapper' in your configuration.
+Identify and stop the process that's listening on port 8080 or configure this application to listen on another port.
 

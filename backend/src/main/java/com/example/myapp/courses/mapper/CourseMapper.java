@@ -12,8 +12,8 @@ public class CourseMapper {
                 .name(r.getName())
                 .description(r.getDescription())
                 .credits(r.getCredits())
-                .theoryHours(r.getTheoryHours())
-                .practiceHours(r.getPracticeHours())
+                .creditTheory(r.getCreditTheory())
+                .praticeTheory(r.getPraticeTheory())
                 .build();
     }
 
@@ -22,8 +22,8 @@ public class CourseMapper {
         c.setName(r.getName());
         c.setDescription(r.getDescription());
         c.setCredits(r.getCredits());
-        c.setTheoryHours(r.getTheoryHours());
-        c.setPracticeHours(r.getPracticeHours());
+        c.setCreditTheory(r.getCreditTheory());
+        c.setPraticeTheory(r.getPraticeTheory());
     }
 
     public static CourseResponse toResponse(Course c) {
@@ -33,17 +33,17 @@ public class CourseMapper {
                 .name(c.getName())
                 .description(c.getDescription())
                 .credits(c.getCredits())
-                ;
-        if (c.getFaculty() != null) {
-            b.facultyId(c.getFaculty().getId());
-            b.facultyName(c.getFaculty().getName());
+                .creditTheory(c.getCreditTheory())
+                .praticeTheory(c.getPraticeTheory());
+        if (c.getCourseElective() != null) {
+            b.courseElectiveId(c.getCourseElective().getId());
         }
-        if (c.getMajor() != null) {
-            b.majorId(c.getMajor().getId());
-            b.majorName(c.getMajor().getName());
+        if (c.getCourseParallel() != null) {
+            b.courseParallelId(c.getCourseParallel().getId());
+        }
+        if (c.getCoursePrevious() != null) {
+            b.coursePreviousId(c.getCoursePrevious().getId());
         }
         return b.build();
     }
 }
-
-

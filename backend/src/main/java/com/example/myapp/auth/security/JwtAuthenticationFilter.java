@@ -2,6 +2,7 @@ package com.example.myapp.auth.security;
 
 import java.io.IOException;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,6 +22,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtTokenProvider tokenProvider;
     private final UserDetailsService userDetailsService;
+    @Value("${jwt.expiration:1000}")
+    long accessTokenValidityMs;
 
     public JwtAuthenticationFilter(JwtTokenProvider tokenProvider, UserDetailsService userDetailsService) {
         this.tokenProvider = tokenProvider;
@@ -30,8 +33,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
-        System.out.println("JwtAuthenticationFilter");
+
+        System.out.println("JwtAuthenticationFilter" + accessTokenValidityMs);
         String jwt = resolveTokenFromCookies(request);
+
         if (jwt != null && tokenProvider.validateToken(jwt)) {
             String username = tokenProvider.getSubject(jwt);
             UserDetails userDetails = userDetailsService.loadUserByUsername(username);
@@ -45,7 +50,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     }
 
     private String resolveTokenFromCookies(HttpServletRequest request) {
-        if (request.getCookies() == null) return null;
+        if (request.getCookies() == null)
+            return null;
         for (Cookie cookie : request.getCookies()) {
             if ("ACCESS_TOKEN".equals(cookie.getName())) {
                 return cookie.getValue();
@@ -54,5 +60,3 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         return null;
     }
 }
-
-

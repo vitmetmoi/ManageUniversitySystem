@@ -4,10 +4,8 @@ import com.example.myapp.common.exception.ResourceNotFoundException;
 import com.example.myapp.courses.dto.CourseRequest;
 import com.example.myapp.courses.dto.CourseResponse;
 import com.example.myapp.courses.mapper.CourseMapper;
-import com.example.myapp.faculty.Faculty;
-import com.example.myapp.faculty.FacultyRepository;
-import com.example.myapp.major.Major;
-import com.example.myapp.major.MajorRepository;
+import com.example.myapp.frame.KnowledgeBlockCourse;
+import com.example.myapp.frame.KnowledgeBlockCourseRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
@@ -22,20 +20,14 @@ import java.util.stream.Collectors;
 public class CourseService {
 
     private final CourseRepository courseRepository;
-    private final FacultyRepository facultyRepository;
-    private final MajorRepository majorRepository;
+    private final KnowledgeBlockCourseRepository knowledgeBlockCourseRepository;
+    
 
     public Page<CourseResponse> getAll(Pageable pageable) {
         return courseRepository.findAll(pageable).map(CourseMapper::toResponse);
     }
 
-    public Page<CourseResponse> findByMajor(Long majorId, Pageable pageable) {
-        return courseRepository.findAllByMajor_Id(majorId, pageable).map(CourseMapper::toResponse);
-    }
-
-    public Page<CourseResponse> findByFaculty(Long facultyId, Pageable pageable) {
-        return courseRepository.findAllByFaculty_Id(facultyId, pageable).map(CourseMapper::toResponse);
-    }
+    
 
     public CourseResponse getById(Long id) {
         Course c = courseRepository.findById(id)
@@ -44,15 +36,24 @@ public class CourseService {
     }
 
     public CourseResponse create(CourseRequest req) {
-        
         courseRepository.findByCode(req.getCode()).ifPresent(x -> {
             throw new DataIntegrityViolationException("Course code already exists");
         });
         Course c = CourseMapper.toEntity(req);
-        if (req.getFacultyId() != null) {
-            Faculty f = facultyRepository.findById(req.getFacultyId())
-                    .orElseThrow(() -> new ResourceNotFoundException("Faculty not found with id " + req.getFacultyId()));
-            c.setFaculty(f);
+        if (req.getCourseElectiveId() != null) {
+            Course e = courseRepository.findById(req.getCourseElectiveId())
+                    .orElseThrow(() -> new ResourceNotFoundException("Course not found with id " + req.getCourseElectiveId()));
+            c.setCourseElective(e);
+        }
+        if (req.getCourseParallelId() != null) {
+            Course p = courseRepository.findById(req.getCourseParallelId())
+                    .orElseThrow(() -> new ResourceNotFoundException("Course not found with id " + req.getCourseParallelId()));
+            c.setCourseParallel(p);
+        }
+        if (req.getCoursePreviousId() != null) {
+            Course pv = courseRepository.findById(req.getCoursePreviousId())
+                    .orElseThrow(() -> new ResourceNotFoundException("Course not found with id " + req.getCoursePreviousId()));
+            c.setCoursePrevious(pv);
         }
        
         return CourseMapper.toResponse(courseRepository.save(c));
@@ -67,12 +68,26 @@ public class CourseService {
             }
         });
         CourseMapper.updateEntity(c, req);
-        if (req.getFacultyId() != null) {
-            Faculty f = facultyRepository.findById(req.getFacultyId())
-                    .orElseThrow(() -> new ResourceNotFoundException("Faculty not found with id " + req.getFacultyId()));
-            c.setFaculty(f);
+        if (req.getCourseElectiveId() != null) {
+            Course e = courseRepository.findById(req.getCourseElectiveId())
+                    .orElseThrow(() -> new ResourceNotFoundException("Course not found with id " + req.getCourseElectiveId()));
+            c.setCourseElective(e);
         } else {
-            c.setFaculty(null);
+            c.setCourseElective(null);
+        }
+        if (req.getCourseParallelId() != null) {
+            Course p = courseRepository.findById(req.getCourseParallelId())
+                    .orElseThrow(() -> new ResourceNotFoundException("Course not found with id " + req.getCourseParallelId()));
+            c.setCourseParallel(p);
+        } else {
+            c.setCourseParallel(null);
+        }
+        if (req.getCoursePreviousId() != null) {
+            Course pv = courseRepository.findById(req.getCoursePreviousId())
+                    .orElseThrow(() -> new ResourceNotFoundException("Course not found with id " + req.getCoursePreviousId()));
+            c.setCoursePrevious(pv);
+        } else {
+            c.setCoursePrevious(null);
         }
        
         return CourseMapper.toResponse(courseRepository.save(c));
@@ -83,6 +98,14 @@ public class CourseService {
             throw new ResourceNotFoundException("Course not found with id " + id);
         }
         courseRepository.deleteById(id);
+    }
+
+    public List<CourseResponse> getByKnowledgeBlock(Long knowledgeBlockId) {
+        List<KnowledgeBlockCourse> relations = knowledgeBlockCourseRepository.findByKnowledgeBlockId(knowledgeBlockId);
+        return relations.stream()
+                .map(KnowledgeBlockCourse::getCourse)
+                .map(CourseMapper::toResponse)
+                .collect(Collectors.toList());
     }
 }
 

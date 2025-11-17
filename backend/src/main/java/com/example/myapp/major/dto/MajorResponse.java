@@ -14,8 +14,6 @@ public class MajorResponse {
     private String description;
     private Long facultyId;
     private String facultyName;
-    private java.math.BigDecimal pricePerCredit;
-    private java.math.BigDecimal totalCredits;
 }
 
 
